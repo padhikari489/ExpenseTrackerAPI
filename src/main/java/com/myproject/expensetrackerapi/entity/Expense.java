@@ -24,6 +24,10 @@ import lombok.Setter;
  * TODO: Lombok @Data isn't working so had to create the getter and setter. Figure out.
  */
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "tbl_expenses")
 public class Expense {
 	@Id

@@ -3,10 +3,14 @@ package com.myproject.expensetrackerapi.service;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.myproject.expensetrackerapi.entity.Expense;
+import com.myproject.expensetrackerapi.exceptions.ResourceNotFoundException;
 import com.myproject.expensetrackerapi.repository.ExpenseRepository;
 
 
@@ -17,9 +21,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 	private ExpenseRepository expenseRepo;
 
 	@Override
-	public List<Expense> getAllExpenses() {
+	public Page<Expense> getAllExpenses(Pageable page) {
 		
-		List<Expense> allExpenses = expenseRepo.findAll();
+		Page<Expense> allExpenses = expenseRepo.findAll(page);
 		return allExpenses;
 	}
 
@@ -30,7 +34,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 		if(expense.isPresent()) {
 			return expense.get();
 		}
-		throw new RuntimeException("Expense is not found for the id "+id);
+		throw new ResourceNotFoundException("Expense is not found for the id "+id);
 		
 	}
 
